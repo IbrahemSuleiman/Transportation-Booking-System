@@ -1,0 +1,103 @@
+﻿@model IEnumerable<adminlte.Models.Vehicle>
+@using Microsoft.AspNet.Identity
+@using adminlte.Models
+
+@{
+    ViewBag.Title = "ManageVehicles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{  var db = new ApplicationDbContext(); }
+
+<div class="content-wrapper">
+    <h2>ManageVehicles</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "CreateVehicle")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Driver name
+            </th>
+            <th>
+                Driver last name
+            </th>
+            <th>
+                Driver National ID
+            </th>
+            <th>
+                Driver Phone
+            </th>
+            <th>
+                Driver Image
+            </th>
+
+            <th>
+              Bus Model
+            </th>
+
+            <th>
+                Bus Plate
+            </th>
+
+            <th>
+                Bus Number
+            </th>
+            <th>
+                Bus Color
+            </th>
+         
+            <th>Available option</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            {
+               
+                var vehicle = db.Vehicles.Where(a => a.Id == item.Id).SingleOrDefault();
+
+                var BUS = db.Buses.Where(a => a.Id == vehicle.IDBus).SingleOrDefault();
+
+                var DRIVER = db.PublicDrivers.Where(a => a.Id == vehicle.IDPublicDriver).SingleOrDefault();
+
+            <tr>                
+                <th>
+                    @DRIVER.DriverName
+                </th>
+                <th>
+                    @DRIVER.DriverLastName
+                </th>
+                <th>
+                    @DRIVER.DriverNationalID
+                </th>
+                <th>
+                    @DRIVER.DriverPhone
+                </th>
+                <th>
+                    <img src="~/uploads/@DRIVER.DriverImage" class="thumbnail"
+                         style="width:48px; height:48px;" />
+                </th>
+
+                <th>
+                    @BUS.BusModel
+                </th>
+
+                <th>
+                    @BUS.BusPlate 
+                </th>
+
+                <th>
+                   @BUS.BusNumber
+                </th>
+                <th>
+                    @BUS.BusColor
+                </th>
+
+                <th>
+                    @Html.ActionLink("Delete", "DeleteVehicle", new { id = item.Id })
+                </th>
+            </tr>
+            }
+        }
+    </table>
+    </div>

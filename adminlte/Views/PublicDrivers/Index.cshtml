@@ -1,0 +1,85 @@
+﻿@model IEnumerable<adminlte.Models.PublicDriver>
+@using adminlte.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var db = new ApplicationDbContext();
+}
+
+<div class="content-wrapper">
+    <h2>Public drivers list</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.PublicDriverID)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.DriverName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverNationalID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IDVehicle)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.PublicDriverID)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverLastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverNationalID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverPhone)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.DriverImage)*@
+                    <img src="~/uploads/@Html.DisplayFor(model => item.DriverImage)" class="thumbnail"
+                         style="width:48px; height:48px;" />
+                </td>
+                <td>
+                    @{ 
+                        var v = db.Vehicles.Where(a => a.Id == item.IDVehicle).SingleOrDefault();
+                        var b = new Bus();
+                        if (v != null)
+                        {
+                            b = db.Buses.Where(a => a.Id == v.IDBus).SingleOrDefault();
+                        }
+
+                    }
+                    @b.BusModel -@b.BusPlate
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>

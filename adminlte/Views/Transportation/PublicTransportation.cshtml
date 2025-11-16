@@ -1,0 +1,60 @@
+﻿@using Microsoft.AspNet.Identity
+@using adminlte.Models
+
+@{
+ViewBag.Title = "PublicTransportation";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+ 
+<h1 style="margin-bottom:20px; color:mediumvioletred">Public transportaion travels </h1>
+
+@{
+var db = new ApplicationDbContext();
+var company_list = db.Companies.ToList();
+}
+<div class="row panel-body">
+@if (company_list.Count > 0)
+{
+    foreach (var Item in company_list)
+    {
+        <div class="panel-heading alert alert-info">
+            <h1>@Item.CompanyName</h1>
+        </div>
+        <div class="row">
+           @{
+            var travel_list = db.Travels.Where(a => a.IDCompany == Item.Id).ToList();
+            if (travel_list.Count > 0)
+            {
+            foreach (var subItem in travel_list)
+            {
+            var company = db.Companies.Where(a => a.Id == subItem.IDCompany).SingleOrDefault();
+            <div class="col-md-3 thumbnail img-size" style="margin-right:20px; margin-left:20px; margin-bottom:30px; min-height:150px">
+                <img src="~/images/bus.png" width="150px" height="150px" />
+                <h3>
+                    Location: @Html.DisplayFor(modelItem => subItem.Location)
+                </h3>
+                <h3>
+                    Destination: @Html.DisplayFor(modelItem => subItem.Destination)
+                </h3>
+                <h4>Leavetime: @Html.DisplayFor(modelItem => subItem.Leavetime)</h4>
+                <h5>@Html.Raw(HttpUtility.HtmlDecode(Html.DisplayFor(model => subItem.company).ToString()))</h5>
+
+                @Html.ActionLink("More details", "TransportationDetails", "Transportation", new { TravelID = subItem.Id }, new { @class = "btn btn-primary" })
+            </div>
+            }
+            }
+            else
+            {
+            <div class="col-md-12" style="margin-right:20px; margin-left:20px; margin-bottom:30px; min-height:150px">
+                <h3>
+                    No travels are available yet for this company!
+                </h3>
+            </div>
+            }
+            }
+            </div>
+    }
+}
+        </div>
+</div>

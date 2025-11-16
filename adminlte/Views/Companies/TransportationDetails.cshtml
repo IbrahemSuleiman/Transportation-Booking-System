@@ -1,0 +1,188 @@
+﻿@model adminlte.Models.Travel
+@using adminlte.Models
+
+@{
+    ViewBag.Title = "TransportationDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var db = new ApplicationDbContext();
+
+    var vehicle = db.Vehicles.Where(a => a.Id == Model.IDVehicle).SingleOrDefault();
+
+    var passenger = db.Passengers.Where(a => a.IDTravel == Model.Id).ToList();
+
+    var BUS = db.Buses.Where(a => a.Id == vehicle.IDBus).SingleOrDefault();
+
+    var DRIVER = db.PublicDrivers.Where(a => a.Id == vehicle.IDPublicDriver).SingleOrDefault();
+
+
+}
+<div class="content-wrapper">
+    <h2>Transportation Details</h2>
+    <div class="row ">
+        <div>
+ 
+            <dl class="dl-horizontal col-md-3">
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Location)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Location)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Destination)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Destination)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Leavetime)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Leavetime)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Notes)
+                </dd>
+
+
+
+            </dl>
+        </div>
+        <div>
+
+      
+            <dl class="dl-horizontal col-md-3">
+
+
+                <dt>
+                    Driver name
+                </dt>
+
+                <dd>
+                    @DRIVER.DriverName
+                </dd>
+                <dt>
+                    Driver Last name
+                </dt>
+
+                <dd>
+                    @DRIVER.DriverLastName
+                </dd>
+
+                <dt>
+                    Bus Model
+                </dt>
+
+                <dd>
+                    @BUS.BusModel
+                </dd>
+
+                <dt>
+                    Bus Plate
+                </dt>
+
+                <dd>
+                    @BUS.BusPlate
+                </dd>
+
+            </dl>
+        </div>
+        <div>
+            <dl class="dl-horizontal col-md-3">
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.PassengerNumber)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.PassengerNumber)
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+   
+
+    <h3>  Passenger list</h3>
+    <table class="table">
+        <tr>           
+            <th>
+               User Name
+            </th>
+            <th>
+                Last Name
+            </th>
+            <th>
+               BOD
+            </th>
+            <th>
+               Address
+            </td>
+
+            <th>
+                Mobile
+            </th>
+
+            <th>
+                Booked sits
+            </th>
+
+            <th>option</th>
+        </tr>
+
+        @foreach (var item in passenger)
+        {
+
+
+            var user = db.Clients.Where(a => a.IDUser == item.IDUser).SingleOrDefault();
+            <tr>
+               
+                <td>
+                    @Html.DisplayFor(modelItem => user.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.DOB)
+                </td>
+                <td>
+                   @Html.DisplayFor(modelItem => user.Address)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => user.Mobile)
+                </td>
+
+                <td>
+                    @item.SitNumber
+                </td>
+
+                <td>
+                    @Html.ActionLink("Cancel reservation", "Cancelreservation", new { passengerID = item.Id })
+                </td>
+            </tr>
+        }
+        `
+    </table>
+
+
+    <p>
+        @Html.ActionLink("Back to List", "Dashboard", "Companies") 
+    </p>
+</div>

@@ -1,0 +1,63 @@
+﻿@using Microsoft.AspNet.Identity
+@using adminlte.Models
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var db = new ApplicationDbContext();
+    string company_id = ViewBag.ComID;
+    var company = db.Companies.Where(a => a.CompanyID == company_id).SingleOrDefault();
+}
+
+
+<div class="content-wrapper">
+
+    <h2>@company.CompanyName Dashboard</h2>
+    <h1 style="margin-bottom:20px; color:mediumvioletred">Public transportaion travels </h1>
+
+    <div class="row panel-body">
+        <div class="row">
+            @{
+                var travel_list = db.Travels.Where(a => a.IDCompany == company.Id).ToList();
+                if (travel_list.Count > 0)
+                {
+                    foreach (var subItem in travel_list)
+                    {
+                        var passenger = db.Passengers.Where(a=>a.IDCompany == company.Id && a.PassengerID == "").ToList();
+                        <div class="col-md-3 thumbnail img-size" style="margin-right:20px; margin-left:20px; margin-bottom:30px; min-height:150px">
+                            <img src="~/images/bus.png" width="75px" height="75px" />
+                            <h3>
+                                Location: @Html.DisplayFor(modelItem => subItem.Location)
+                            </h3>
+                            <h3>
+                                Destination: @Html.DisplayFor(modelItem => subItem.Destination)
+                            </h3>
+                            <h4>
+                                Leave time: @Html.DisplayFor(modelItem => subItem.Leavetime)
+                            </h4>
+                            <h4>
+                                Booked sits: @Html.DisplayFor(modelItem => subItem.PassengerNumber)
+                            </h4>
+
+                           
+
+                            @Html.ActionLink("More details", "TransportationDetails", "Companies", new { TravelID = subItem.Id }, new { @class = "btn btn-primary" })
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="col-md-12" style="margin-right:20px; margin-left:20px; margin-bottom:30px; min-height:150px">
+                        <h3>
+                            No travels are available yet for this company!
+                        </h3>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+</div>

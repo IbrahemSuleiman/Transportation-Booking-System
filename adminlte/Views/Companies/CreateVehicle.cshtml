@@ -1,0 +1,78 @@
+﻿@model adminlte.Models.Vehicle
+
+@{
+ViewBag.Title = "CreateVehicle";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+<h2>CreateVehicle</h2>
+
+@using (Html.BeginForm("CreateVehicle", "Companies", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Vehicle</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.Label("Bus", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @{
+                    List<SelectListItem> listItems_Buses = new List<SelectListItem>();
+                    if(ViewBag.Buses!=null)
+                    {
+                        foreach (var item in ViewBag.Buses)
+                        {
+                            listItems_Buses.Add(new SelectListItem
+                            {
+                                Text = item.BusModel + "/ " + item.BusPlate,
+                                Value = item.BusModel + "/ " + item.BusPlate
+                            });
+                        }
+                    }
+
+                }
+
+                @Html.DropDownList("BusData", listItems_Buses, "-- Select Bus please --")
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.Label("DriverName", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+            @{
+                List<SelectListItem> listItems_drivers = new List<SelectListItem>();
+                if (ViewBag.Drivers!=null)
+                {
+                    foreach (var item in ViewBag.Drivers)
+                    {
+                        listItems_drivers.Add(new SelectListItem
+                        {
+                            Text = item.DriverName + " " + item.DriverLastName,
+                            Value = item.DriverName + " " + item.DriverLastName
+                        });
+                    }
+                }
+
+            }
+
+            @Html.DropDownList("DriverData", listItems_drivers, "-- Select Driver please --")           
+            </div>
+        </div>
+            
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "ManageVehicles")
+</div>
+</div>

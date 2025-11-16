@@ -1,0 +1,66 @@
+﻿@model IEnumerable<adminlte.Models.Client>
+
+@{
+    ViewBag.Title = "ViewProfiles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+<div class="content-wrapper">
+    <h2>Clients List</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NationalId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+   
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.NationalId)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Mobile)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.DOB)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Address)
+                </td>
+
+                <td>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

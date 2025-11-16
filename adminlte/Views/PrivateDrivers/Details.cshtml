@@ -1,0 +1,108 @@
+﻿@model adminlte.Models.PrivateDriver
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+    <h2>Details</h2>
+
+    <div>
+        <h4>PrivateDriver</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.PrivateDriverID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PrivateDriverID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DriverName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DriverName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DriverLastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DriverLastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DriverNationalID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DriverNationalID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DriverPhone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DriverPhone)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DriverImage)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DriverImage)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TaxiModel)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaxiModel)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TaxiPlate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaxiPlate)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TaxiColor)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaxiColor)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TaxiImage)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TaxiImage)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Availability)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Availability)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    </div>

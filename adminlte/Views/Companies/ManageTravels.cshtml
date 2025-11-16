@@ -1,0 +1,114 @@
+﻿@model IEnumerable<adminlte.Models.Travel>
+@using Microsoft.AspNet.Identity
+@using adminlte.Models
+
+@{
+    ViewBag.Title = "ManageTravels";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{  var db = new ApplicationDbContext(); }
+<div class="content-wrapper">
+    <h2>ManageTravels</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "CreateTravel")
+    </p>
+    <table class="table">
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.TravelID)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Destination)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Leavetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.IDCompany)
+            </th>*@
+            @*<th>
+                @Html.DisplayNameFor(model => model.IDPassenger)
+            </th>*@
+            <th>
+                Driver name
+            </th>
+            <th>
+                Driver last name
+            </th>
+
+            <th>
+                Bus Model
+            </th>
+
+            <th>
+                Bus Plate
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {            
+                
+            var vehicle = db.Vehicles.Where(a => a.Id == item.IDVehicle).SingleOrDefault();
+
+            var BUS = db.Buses.Where(a => a.Id == vehicle.IDBus).SingleOrDefault();
+
+            var DRIVER = db.PublicDrivers.Where(a => a.Id == vehicle.IDPublicDriver).SingleOrDefault();            
+
+            <tr>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.TravelID)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Destination)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Leavetime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.IDCompany)
+                </td>*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.IDPassenger)
+                </td>*@
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.IDVehicle)
+                </td>*@
+
+
+                <td>
+                   @DRIVER.DriverName
+                </td>
+                <td>
+                   @DRIVER.DriverLastName
+                </td>
+
+                <td>
+                   @BUS.BusModel
+                </td>
+                <td>
+                   @BUS.BusPlate
+                </td>
+
+
+                <td>                  
+                    @Html.ActionLink("Delete", "DeleteTravel", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>

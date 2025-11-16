@@ -1,0 +1,133 @@
+﻿@model adminlte.Models.Passenger
+@using adminlte.Models
+
+@{
+    ViewBag.Title = "Book_Transportaion";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{ 
+    var db = new ApplicationDbContext();
+    var travel = ViewBag.TravelData;
+
+    int travelid = travel.IDVehicle;
+
+    var vehicle = db.Vehicles.Where(a => a.Id == travelid).SingleOrDefault();
+
+    var BUS = db.Buses.Where(a => a.Id == vehicle.IDBus).SingleOrDefault();
+
+    var DRIVER = db.PublicDrivers.Where(a => a.Id == vehicle.IDPublicDriver).SingleOrDefault();
+}
+
+<div class="content-wrapper">
+    <h2>Book Transportaion</h2>
+
+    <div>
+        @{
+            if (ViewBag.message != null)
+            {
+                <h3 style="color:seagreen">@ViewBag.message</h3>
+            }
+        }
+    </div>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div>
+            <h4>Travel</h4>
+            <hr />
+            <dl class="dl-horizontal">
+
+                <dt>
+                    Location
+                </dt>
+
+                <dd>
+                    @travel.Location
+                </dd>
+
+                <dt>
+                    Destination
+                </dt>
+
+                <dd>
+                    @travel.Destination
+                </dd>
+
+                <dt>
+                    Leavetime
+                </dt>
+
+                <dd>
+                    @travel.Leavetime
+                </dd>
+
+                <dt>
+                    Notes
+                </dt>
+
+                <dd>
+                    @travel.Notes
+                </dd>
+
+
+                <dt>
+                    Driver name
+                </dt>
+
+                <dd>
+                    @DRIVER.DriverName
+                </dd>
+                <dt>
+                    Driver Last name
+                </dt>
+
+                <dd>
+                    @DRIVER.DriverLastName
+                </dd>
+
+                <dt>
+                    Bus Model
+                </dt>
+
+                <dd>
+                    @BUS.BusModel
+                </dd>
+
+                <dt>
+                    Bus Plate
+                </dt>
+
+                <dd>
+                    @BUS.BusPlate
+                </dd>
+
+            </dl>
+        </div>
+
+        <div class="form-horizontal" >
+            <h4>Passenger</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group" >
+                @Html.LabelFor(model => model.SitNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.EditorFor(model => model.SitNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SitNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Book" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "PublicTransportation")
+    </div>
+    </div>

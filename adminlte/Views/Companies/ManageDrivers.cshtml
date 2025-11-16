@@ -1,0 +1,64 @@
+﻿@model IEnumerable<adminlte.Models.PublicDriver>
+
+@{
+    ViewBag.Title = "ManageDrivers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+    <h2>ManageDrivers</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "CreateDrivers")
+    </p>
+    <table class="table">
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.DriverName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverNationalID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverImage)
+            </th>
+ 
+            <th>Available option</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverLastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverNationalID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverPhone)
+                </td>
+                <td>
+                    <img src="~/uploads/@Html.DisplayFor(model=>item.DriverImage)" class="thumbnail"
+                         style="width:48px; height:48px;" />
+                </td>
+ 
+                <td>
+                    @Html.ActionLink("Edit", "EditDriver", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteDriver", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>

@@ -1,0 +1,98 @@
+﻿@model IEnumerable<adminlte.Models.PrivateDriver>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+    <h2>Private drivers list</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.PrivateDriverID)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.DriverName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverLastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverNationalID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverPhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DriverImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxiModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxiPlate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxiColor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaxiImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Availability)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.PrivateDriverID)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverLastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverNationalID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DriverPhone)
+                </td>
+                <td>
+                    <img src="~/uploads/@Html.DisplayFor(model=>item.DriverImage)" class="thumbnail"
+                         style="width:48px; height:48px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxiModel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxiPlate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxiColor)
+                </td>
+                <td>
+                    <img src="~/uploads/@Html.DisplayFor(model=>item.TaxiImage)" class="thumbnail"
+                         style="width:48px; height:48px;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Availability)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>

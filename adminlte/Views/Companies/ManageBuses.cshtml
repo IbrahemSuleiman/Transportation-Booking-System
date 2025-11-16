@@ -1,0 +1,56 @@
+﻿@model IEnumerable<adminlte.Models.Bus>
+
+@{
+    ViewBag.Title = "ManageBuses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+
+    <h2>ManageBuses</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "CreateBuses")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BusNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BusModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BusPlate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BusColor)
+            </th>
+
+            <th>Available options</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BusNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BusModel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BusPlate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BusColor)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "EditBus", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteBus", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>

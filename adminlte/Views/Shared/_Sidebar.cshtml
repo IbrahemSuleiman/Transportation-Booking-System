@@ -1,0 +1,259 @@
+﻿@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity
+@using adminlte.Models
+@{
+    var db = new ApplicationDbContext();
+    var UserID = User.Identity.GetUserId();
+    var Current_user = db.Users.Where(a => a.Id == UserID).SingleOrDefault();
+    List<MailBox> mails = new List<MailBox>();
+
+    if (Current_user == null) { Current_user = new ApplicationUser();  }
+    else { mails = db.MailBoxes.Where(a => a.TargetID == Current_user.Id).ToList(); }
+}
+
+
+
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+<!-- Sidebar user panel -->
+@if (Request.IsAuthenticated)
+    {
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="~/Content/adminlte/img/avatar5.png" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>@User.Identity.GetUserName() </p>
+                <a href=""><i class="fa fa-circle text-success"></i> online</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="~/Content/adminlte/img/avatar5.png" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>Unknown</p>
+                <a href="~/Account/Login"><i class="fa fa-circle text-warning"></i> offline</a>
+            </div>
+        </div>
+    }
+    <!-- search form -->
+    <form action="#" method="get" class="sidebar-form">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search...">
+            <span class="input-group-btn">
+                <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+    <!-- /.search form -->
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu" data-widget="tree">
+        <li class="header">MAIN NAVIGATION</li>
+        <li><a href="@Url.Action("index", "Home")"><i class="fa fa-dashboard"></i> <span>Home</span></a></li>
+        
+        @if (Current_user.UserRole == "Transportation Company")
+        {
+            <li class="@Html.IsSelected(controller: "Companies")">
+                <a href="@Url.Action("Dashboard", "Companies")">
+                    <i class="fa fa-calendar"></i> <span>Dashboard</span>
+                   
+                </a>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "Company")">
+                <a href="@Url.Action("ManageBuses", "Companies")">
+                    <i class="fa fa-calendar"></i> <span>Manage Buses</span>
+                    <span class="pull-right-container">
+                        @{
+                            var bus_number = db.Buses.Where(a => a.BusID == UserID).ToList();
+                        }
+                        <small class="label pull-right bg-blue">@bus_number.Count()</small>
+                    </span>
+                </a>
+            </li>
+             <li class="@Html.IsSelected(controller: "Companies")">
+                <a href="@Url.Action("ManageDrivers", "Companies")">
+                    <i class="fa fa-calendar"></i> <span>Manage Drivers</span>
+                    <span class="pull-right-container">
+                        @{
+                            var dribver_number = db.PublicDrivers.Where(a => a.PublicDriverID == UserID).ToList();
+                        }
+                        <small class="label pull-right bg-blue">@dribver_number.Count()</small>
+                    </span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "Companies")">
+                <a href="@Url.Action("ManageVehicles", "Companies")">
+                    <i class="fa fa-calendar"></i> <span>Manage Vehicles</span>
+                    <span class="pull-right-container">
+                        @{
+                            var Vehicle_number = db.Vehicles.Where(a => a.VehicleID == UserID).ToList();
+                        }
+                        <small class="label pull-right bg-blue">@Vehicle_number.Count()</small>
+                    </span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "Companies")">
+                <a href="@Url.Action("ManageTravels", "Companies")">
+                    <i class="fa fa-calendar"></i> <span>Manage Travels</span>
+                    <span class="pull-right-container">
+                        @{
+                            var travel_number = db.Travels.Where(a => a.TravelID == UserID).ToList();
+                        }
+                        <small class="label pull-right bg-red">@travel_number.Count()</small>
+                    </span>
+                </a>
+            </li>
+        }
+
+        @if (Current_user.UserRole == "Client")
+        {
+            <li class="@Html.IsSelected(controller: "Transportation")">
+                <a href="@Url.Action("PublicTransportation", "Transportation")">
+                    <i class="fa fa-calendar"></i> <span>Public Transportation</span>
+                    <span class="pull-right-container">
+                        @{
+                            //var bus_number = db.Buses.Where(a => a.BusID == UserID).ToList();
+                        }
+                        
+                    </span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "PrivateTransportation")">
+                <a href="@Url.Action("index", "PrivateTransportation")">
+                    <i class="fa fa-calendar"></i> <span>Private Transportation</span>
+                    <span class="pull-right-container">
+                        @{
+                            //var bus_number = db.Buses.Where(a => a.BusID == UserID).ToList();
+                        }
+                        
+                    </span>
+                </a>
+            </li>
+        }
+
+        @if (Current_user.UserRole == "Admin")
+        {
+            <li class="@Html.IsSelected(controller: "Account")">
+                <a href="@Url.Action("ViewProfiles", "Account")">
+                    <i class="fa fa-calendar"></i> <span>Clients</span>
+                    <span class="pull-right-container">
+                        @{
+                            var n = db.Clients.ToList().Count;
+                            <small class="label pull-right bg-red">@n</small>
+                        }
+
+                    </span>
+                </a>
+            </li>
+
+
+            <li class="@Html.IsSelected(controller: "Companies")">
+                <a href="@Url.Action("index", "Companies")">
+                    <i class="fa fa-calendar"></i> <span>Companies</span>
+                    <span class="pull-right-container">
+                        @{
+                            n = db.Companies.ToList().Count;
+                            <small class="label pull-right bg-green">@n</small>
+                        }
+
+                    </span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "PublicDrivers")">
+                <a href="@Url.Action("index", "PublicDrivers")">
+                    <i class="fa fa-calendar"></i> <span>Public drivers</span>
+                    <span class="pull-right-container">
+                        @{
+                             n = db.PublicDrivers.ToList().Count;
+                            <small class="label pull-right bg-blue">@n</small>
+                        }
+
+                    </span>
+                </a>
+            </li>
+            <li class="@Html.IsSelected(controller: "PrivateDrivers")">
+                <a href="@Url.Action("index", "PrivateDrivers")">
+                    <i class="fa fa-calendar"></i> <span>Private drivers</span>
+                    <span class="pull-right-container">
+                        @{
+                            n = db.PrivateDrivers.ToList().Count;
+                            <small class="label pull-right bg-green">@n</small>
+                        }
+
+                    </span>
+                </a>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "PrivateTransportation")">
+                <a href="@Url.Action("Adminindex", "PrivateTransportation")">
+                    <i class="fa fa-calendar"></i> <span>Orders</span>
+                    <span class="pull-right-container">
+                        @{
+                            n = db.Orders.ToList().Count;
+                            <small class="label pull-right bg-green">@n</small>
+                        }
+
+                    </span>
+                </a>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "Tickets")">
+                <a href="@Url.Action("index", "Tickets")">
+                    <i class="fa fa-calendar"></i> <span>Tickets</span>
+                    <span class="pull-right-container">
+                        @{
+                            n = db.Tickets.ToList().Count;
+                            <small class="label pull-right bg-maroon">@n</small>
+                        }
+
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li ><a href="@Url.Action("index", "Tickets")"><i class="fa fa-circle-o"></i>Tickets list</a></li>
+                    <li><a href="@Url.Action("CreateTicket", "Tickets")"><i class="fa fa-circle-o"></i> Create ticket</a></li>
+                </ul>
+              </li>
+
+
+                            }
+
+
+
+        @if (Current_user.UserRole == "Private driver")
+        {
+            
+        }
+
+        <li class="@Html.IsSelected(controller: "Calendar")">
+            <a href="@Url.Action("Index", "Calendar")">
+                <i class="fa fa-calendar"></i> <span>Calendar</span>
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-fuchsia"></small>
+                </span>
+            </a>
+        </li>
+
+        <li class="@Html.IsSelected(controller: "Mailbox")">
+            <a href="@Url.Action("index", "Mailboxes")">
+                <i class="fa fa-envelope"></i> <span>Mailbox</span>
+                <span class="pull-right-container">
+                    <small class="label pull-right bg-green">@mails.Count</small>
+                </span>
+            </a>
+        </li>
+
+
+    </ul>
+    </section>
+<!-- /.sidebar -->
+</aside>
+

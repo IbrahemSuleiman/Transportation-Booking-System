@@ -1,0 +1,133 @@
+﻿@model adminlte.Models.MailBox
+@using Microsoft.AspNet.Identity
+@using adminlte.Models
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var db = new ApplicationDbContext();
+    var user = db.Clients.Where(a => a.IDUser == Model.SenderID).SingleOrDefault();
+
+    var Current_user = db.Users.Where(a => a.Id == user.IDUser).SingleOrDefault();
+}
+
+<h2>تفاصيل الرسالة</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Message)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Message)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeStamp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeStamp)
+        </dd>
+
+
+
+    </dl>
+</div>
+
+
+<div class="row">
+    @*//-------------------------------------------------*@
+
+    <div class="col-md-6">
+        <h2>بيانات المرسل </h2>
+
+        <dl class="dl-horizontal">
+            <dt>
+                اسم المشترك
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => user.UserName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => user.LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => user.LastName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => user.Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => user.Address)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => user.Mobile)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => user.Mobile)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => user.NationalId)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => user.NationalId)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => user.DOB)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => user.DOB)
+            </dd>
+        </dl>
+
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    نوع الحساب
+                </dt>
+
+                <dd>
+                    @user.UserRole
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+
+    @*------------------------------------------------------------------*@
+    <div class="col-md-6">
+        <h2>image</h2>
+        <dl class="dl-horizontal">
+            <dd>
+                <img src="~/images/bus.png" class="thumbnail"
+                     style="width:148px; height:148px;" />
+            </dd>
+
+        </dl>
+
+    </div>
+</div>
+
+<p>
+    @Html.ActionLink("Back to list", "Index")
+</p>

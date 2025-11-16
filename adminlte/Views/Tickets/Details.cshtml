@@ -1,0 +1,60 @@
+﻿@model adminlte.Models.Ticket
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+    <h2>Details</h2>
+
+    <div>
+        <h4>Ticket</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.OrderID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.OrderID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DriverID)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DriverID)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.State)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.State)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.OpenTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.OpenTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CloseTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CloseTime)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>

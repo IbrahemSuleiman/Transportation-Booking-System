@@ -1,0 +1,79 @@
+﻿@model adminlte.Models.Ticket
+
+@{
+    ViewBag.Title = "CreateTicket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper">
+    <h2>Create Ticket</h2>
+
+    @using (Html.BeginForm("CreateTicket", "Tickets", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+       
+
+        <div class="form-horizontal">
+            <h4>Tickets</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.Label("Drivers", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @{
+                        List<SelectListItem> listItems_drivers = new List<SelectListItem>();
+                        if (ViewBag.privateDrivers != null)
+                        {
+                            foreach (var item in ViewBag.privateDrivers)
+                            {
+                                listItems_drivers.Add(new SelectListItem
+                                {
+                                    Text = item.DriverName + "/ " + item.DriverLastName,
+                                    Value = item.DriverName + "/ " + item.DriverLastName
+                                });
+                            }
+                        }
+
+                    }
+
+                    @Html.DropDownList("privateDrivers", listItems_drivers, "-- Select driver please --")
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.Label("Orders", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @{
+                        List<SelectListItem> listItems_orders = new List<SelectListItem>();
+                        if (ViewBag.Orders != null)
+                        {
+                            foreach (var item in ViewBag.Orders)
+                            {
+                                listItems_orders.Add(new SelectListItem
+                                {
+                                    Text = item.Location + " " + item.Distination + " " + item.Time,
+                                    Value = item.Location + " " + item.Distination + " " + item.Time
+                                });
+                            }
+                        }
+
+                    }
+
+                    @Html.DropDownList("OrderData", listItems_orders, "-- Select order please --")
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+                        }
+
+    <div>
+        @Html.ActionLink("Back to List", "index")
+    </div>
+</div>

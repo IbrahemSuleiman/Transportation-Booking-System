@@ -1,0 +1,106 @@
+﻿@model adminlte.Models.Travel
+@using adminlte.Models
+
+@{
+    ViewBag.Title = "TransportationDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var db = new ApplicationDbContext();
+
+    var vehicle = db.Vehicles.Where(a => a.Id == Model.IDVehicle).SingleOrDefault();
+
+    var BUS = db.Buses.Where(a => a.Id == vehicle.IDBus).SingleOrDefault();
+
+    var DRIVER = db.PublicDrivers.Where(a => a.Id == vehicle.IDPublicDriver).SingleOrDefault();
+}
+<div class="content-wrapper">
+    <h2>Transportation Details</h2>
+
+    <div>
+        <h4>Travel</h4>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Location)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Destination)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Destination)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Leavetime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Leavetime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Notes)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Notes)
+            </dd>
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PassengerNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PassengerNumber)
+            </dd>
+
+
+            <dt>
+                Driver name
+            </dt>
+
+            <dd>
+                @DRIVER.DriverName
+            </dd>
+            <dt>
+                Driver Last name
+            </dt>
+
+            <dd>
+                @DRIVER.DriverLastName
+            </dd>
+
+            <dt>
+                Bus Model
+            </dt>
+
+            <dd>
+                @BUS.BusModel
+            </dd>
+
+            <dt>
+                Bus Plate
+            </dt>
+
+            <dd>
+                @BUS.BusPlate
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Back to List", "PublicTransportation", "Transportation") |
+        @Html.ActionLink("Book a place", "Book_Transportaion", "Transportation", new { TravelID = Model.Id }, new { @class = "btn btn-primary" })
+       
+    </p>
+    </div>

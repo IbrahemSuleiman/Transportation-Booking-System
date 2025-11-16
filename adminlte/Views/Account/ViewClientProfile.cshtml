@@ -1,0 +1,150 @@
+﻿@model  adminlte.Models.Client    
+@using Microsoft.AspNet.Identity
+@using adminlte.Models
+@{
+    ViewBag.Title = "ViewProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var db = new ApplicationDbContext();
+    var UserID = User.Identity.GetUserId();
+    var Current_user = db.Clients.Where(a => a.IDUser == UserID).SingleOrDefault();
+    if (Current_user==null) { Current_user = new Client(); }
+}
+
+@if(Current_user.UserRole=="Client")
+{
+<div class="content-wrapper">
+    <!-- Main content -->
+
+<section class="content">
+<div class="box box-primary">
+<div class="P_20">
+    <h2>Profile</h2>
+</div>
+<div class="P_20">
+    <p>@Html.ActionLink("Edit profile", "EditClientProfile", "Account")</p>
+</div>
+<div>
+    <div class="row">
+        @*//-------------------------------------------------*@
+        <div class="col-md-7">
+            <h2 class="P_20">Info</h2>
+
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.UserName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.UserName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.LastName)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email   )
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Email )
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Address)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Mobile)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Mobile)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.NationalId)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.NationalId)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.DOB)
+                </dt>
+
+                <dd>
+                    @{var dob = Model.DOB.ToShortDateString();}
+                    @dob
+                </dd>
+            </dl>
+
+            <div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.UserRole)
+                    </dt>
+
+                    <dd>
+                        @Current_user.UserRole
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        @*------------------------------------------------------------------*@
+        <div class="col-md-4">
+            <dl class="dl-horizontal">
+                <h2> </h2>
+                <dd>
+                    <img src="~/uploads/@Current_user.ImagePath" class="thumbnail"
+                            style="width:148px; height:148px;" />
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- /.row -->
+</section>
+<!-- /.content -->
+</div>
+}
+    else
+    {
+        <div class="content-wrapper">
+            <section class="content">
+                <div class="box box-primary">
+                    <div class="P_20">
+                        <h2>Profile</h2>
+                    </div>
+                    <div class="P_20">
+                        <h4>This option is only for Clients</h4>
+                    </div>
+                </div>
+
+                <!-- /.row -->
+            </section>
+            </div>
+            <!-- /.content -->
+  }
+
+
+
+
+
+
+
+
+
+
+
+

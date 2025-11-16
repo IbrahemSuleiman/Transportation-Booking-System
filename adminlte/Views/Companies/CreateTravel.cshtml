@@ -1,0 +1,145 @@
+﻿@model adminlte.Models.Travel
+@using Microsoft.AspNet.Identity
+@using adminlte.Models
+
+@{
+    ViewBag.Title = "CreateTravel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ 
+    var db = new ApplicationDbContext();
+    var CurrentID = User.Identity.GetUserId();
+}
+
+<div class="content-wrapper">
+    <h2>CreateTravel</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Travel</h4>
+            <hr/>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.TravelID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TravelID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TravelID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Destination, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Destination, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Destination, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Leavetime, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Leavetime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Leavetime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Notes, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Vehicle", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10" style="width:300px">
+                    @{
+                        List<SelectListItem> listItems_Vehicles = new List<SelectListItem>();
+                        if (ViewBag.Vehicle != null)
+                        {
+                            foreach (var item in ViewBag.Vehicle)
+                            {
+                                var Bus = new Bus();
+                                var publicDriver = new PublicDriver();
+
+                                foreach (var subitem1 in ViewBag.Buses)
+                                {
+                                    if (subitem1.Id == item.IDBus)
+                                    {
+                                        Bus = subitem1;
+                                    }
+                                }
+                                foreach (var subitem2 in ViewBag.Drivers)
+                                {
+                                    if (subitem2.Id == item.IDPublicDriver)
+                                    {
+                                        publicDriver = subitem2;
+                                    }
+                                }
+
+                                listItems_Vehicles.Add(new SelectListItem
+                                {
+                                    Text = publicDriver.DriverName + " " + publicDriver.DriverLastName + " / " + Bus.BusModel + " " + Bus.BusPlate ,
+                                    Value = publicDriver.DriverName + " " + publicDriver.DriverLastName + " / " + Bus.BusModel + " " + Bus.BusPlate
+                                });
+                            }
+                        }
+
+                    }
+
+                    @Html.DropDownList("TravelData", listItems_Vehicles, "-- Select vehicle please --")
+                </div>
+            </div>
+
+
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.IDCompany, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.IDCompany, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IDCompany, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IDPassenger, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.IDPassenger, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IDPassenger, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IDVehicle, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.IDVehicle, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.IDVehicle, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+    </div>
